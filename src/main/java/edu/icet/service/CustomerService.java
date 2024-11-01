@@ -11,3 +11,4 @@ public interface CustomerService {
     Customer searchCustomerById(Integer id);
     void updateCustomerById(Customer customer);
 }
+

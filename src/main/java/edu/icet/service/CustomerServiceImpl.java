@@ -9,7 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +21,11 @@ public class CustomerServiceImpl implements CustomerService{
     private final ModelMapper mapper;
     @Override
     public List<Customer> getAll() {
-        return null;
+        List<Customer> customerArrayList = new ArrayList<>();
+        repository.findAll().forEach(entity->{
+            customerArrayList.add(mapper.map(entity, Customer.class));
+        });
+        return customerArrayList;
     }
 
     @Override
@@ -29,16 +35,16 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void deleteCustomerById(Integer id) {
-
+        repository.deleteById(id);
     }
 
     @Override
     public Customer searchCustomerById(Integer id) {
-        return null;
+        return mapper.map(repository.findById(id), Customer.class);
     }
 
     @Override
     public void updateCustomerById(Customer customer) {
-
+        repository.save(mapper.map(customer,CustomerEntity.class));
     }
 }
